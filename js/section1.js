@@ -13,16 +13,19 @@
 // Select an element and modify it
 // d3.select() finds ONE element (like querySelector)
 // d3.selectAll() finds ALL elements (like querySelectorAll)
-
+// selecting an element
 d3.select('#demo-1')
-    .style('color', 'blue')
-    .style('font-size', '20px')
+    .style('color', 'blue') //color should be blue
+    .style('font-size', '20px') //0font
     .text('This text was changed by D3!');
 
 // TODO: change the text above to add your name
 // TODO: change the color to something else you like // keep in mind color contrast
 
-
+d3.select('#demo-1')
+    .style('color', 'red')
+    .style('font-size', '50px')
+    .text('sushi')
 // Create and append new elements
 d3.select('#demo-1')
     .append('p')
@@ -30,3 +33,8 @@ d3.select('#demo-1')
     .style('background-color', 'lightgray');
 
 // TODO: append a new element with your favorite food and style it with a different background color
+
+d3.select('#demo-1')
+    .append('p')
+    .text('pizza')
+    .style('background-color', '#9cff33');

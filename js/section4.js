@@ -22,7 +22,7 @@ const barSvg = d3.select('#demo-4')
     .append('svg')
     .attr('viewBox', `0 0 ${barWidth + barMargin.left + barMargin.right} ${barHeight + barMargin.top + barMargin.bottom}`)
     .attr('preserveAspectRatio', 'xMidYMid meet')
-    .append('g')
+    .append('g') //creating a group
     .attr('transform', `translate(${barMargin.left},${barMargin.top})`);
 
 // We are using viewBox here, which allows the SVG to scale responsively while maintaining the aspect ratio. 
@@ -107,6 +107,27 @@ const hBarWidth = 400 - hBarMargin.left - hBarMargin.right;
 const hBarHeight = 500 - hBarMargin.top - hBarMargin.bottom;
 
 // Create SVG for horizontal bar chart
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Create scales for the horizontal bar chart

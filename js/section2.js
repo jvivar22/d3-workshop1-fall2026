@@ -17,7 +17,7 @@ const gasPrices = sampledData.map(item => parseFloat(item.gas));
 
 // Now let's see how we bind this data to elements
 d3.select('#demo-2')
-    .append('svg')
+    .append('svg') //a vector canvas
     .attr('width', 400) // Set width of the SVG
     .attr('height', 100) // Set height of the SVG
     .selectAll('circle') // Select circles (we don't have them yet) - we select circles that don't exist yet to tell D3 what kind of elements to create
@@ -31,7 +31,20 @@ d3.select('#demo-2')
 
 // TODO: sample electricity prices instead of gas and create rectangles instead of circles; make the color of the rectangles green;
 const electricityPrices = sampledData.map(item => parseFloat(item.elec));
-// YOUR CODE GOES HERE 
+
 
 // Remember that circle needs radius (r) and center (cx, cy) to create it,
 // while rectangles need x, y, width, and height. You can use the electricity price to determine the height of the rectangle and set a fixed width.
+
+d3.select('#demo-2')
+    .append('svg') //a vector canvas
+    .attr('width', 400) // Set width of the SVG
+    .attr('height', 100) // Set height of the SVG
+    .selectAll('rect') // Select rectangles
+    .data(electricityPrices) // electricity prices
+    .join('rect') // Create a circle for each data point (this is where the circles are created)
+    .attr('rx', (d, i) => i*60+30) // Set x position based on index
+    .attr('ry', 100) // Set y position (fixed for now)
+    .attr('width', 20)
+    .attr('height', d => d*100)
+    .attr('fill', '#ff9cff')
