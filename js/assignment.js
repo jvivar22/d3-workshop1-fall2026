@@ -15,15 +15,19 @@
 // ============================================================================
 // DATA LOADING
 // ============================================================================
-// Load CSV files for three stocks in parallel
+// Load CSV files for five stocks in parallel
 // Pattern: d3.csv("filename").then(data => ({name: "SYMBOL", values: data}))
 
 let stocks = await Promise.all([
     d3.csv("data/AAPL.csv").then(data => ({ name: "AAPL", values: data })),
     // TODO: Load GOOG.csv with name "GOOG"
+    d3.csv("data/GOOG.csv").then(data => ({ name: "GOOG", values: data })),
     // TODO: Load AMZN.csv with name "AMZN"
+    d3.csv("data/AMZN.csv").then(data => ({ name: "AMZN", values: data })),
     // TODO: LOAD IBM.csv with name "IBM"
+    d3.csv("data/IBM.csv").then(data => ({ name: "IBM", values: data })),
     // TODO: LOAD MSFT.csv with name "MSFT"
+    d3.csv("data/MSFT.csv").then(data => ({ name: "MSFT", values: data }))
 ]);
 
 console.log("Loaded stocks:", stocks);
@@ -39,15 +43,22 @@ stocks.forEach(stock => {
     stock.values.forEach(d => {
         // TODO: Convert d.Date from string to Date object
         // Hint: new Date(d.Date)
+        d.Date = new Date(d.Date);
 
         // TODO: Convert d.Close from string to number
         // Hint: Use the + operator like +d.Close
+        d.CLose = +d.Close;
 
         // TODO: Convert these additional fields to numbers
         // d.Open, d.High, d.Low, d.Volume
+        d.Open = +d.Open;
+        d.High = +d.High;
+        d.Low = +d.Low;
+        d.Volum = +d.Volume;
     });
 
     // TODO: Sort stock.values by date (oldest to newest)
+    stock.values.sort((a, b) => a.Date - b.Date);
 });
 
 console.log("Processed first stock:", stocks[0].values[0]);
@@ -90,25 +101,33 @@ const allValues = stocks.flatMap(s => s.values);
 // TODO: Create a time scale using d3.scaleUtc()
 // Hint: Look at demo.js Section 5 for the pattern
 const x = d3.scaleUtc()
-    .domain(/* TODO: Define domain for x axis */)
-    .range(/* TODO: Define width range in pixels */);
+    //.domain(/* TODO: Define domain for x axis */)
+    .domain(d3.extent(allValues, d => d.Date))
+    //.range(/* TODO: Define width range in pixels */);
+    .range([0, lineWidth]);
 
 // Y Scale - Maps prices to vertical positions
 // TODO: Create a linear scale using d3.scaleLinear()
 const y = d3.scaleLinear()
-    .domain([
+    //.domain([
         // TODO: Get minimum Close price from all stocks
 
         // TODO: Get maximum Close price from all stocks
 
+    //])
+    .domain([
+        d3.min(allValues, d => d.Close), // Get minimum price across all regions and dates
+        d3.max(allValues, d => d.Close) // Get maximum price across all regions and dates
     ])
-    .range(/* TODO: define height range in pixels */);
+    //.range(/* TODO: define height range in pixels */);
+    .range([lineHeight, 0]);
 
 // Color Scale - Maps stock names to colors
 // TODO: Create an ordinal color scale
 // Hint: d3.scaleOrdinal(d3.schemeCategory10).domain(mapping goes here)
-const color = /* TODO: Your code here */
-
+//const color = /* TODO: Your code here */
+const color = d3.scaleOrdinal(d3.schemeCategory10)
+    .domain(stocks.map(stock => stock.name));
 
 // ============================================================================
 // ADD AXES
